@@ -1,5 +1,6 @@
 const express = require("express");
-const getUsers = require("./routes/user");
+const userRoute = require("./routes/user");
+const postRoute = require("./routes/post");
 const dotenv = require("dotenv");
 
 const app = express();
@@ -7,7 +8,8 @@ dotenv.config();
 const PORT = process.env.port || 2200;
 
 app.use(express.json());
-app.use(getUsers);
+app.use(userRoute);
+app.use(postRoute);
 
 // CREATING MONGODB DATABASE CONNECTION
 
