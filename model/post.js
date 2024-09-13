@@ -16,6 +16,11 @@ const schema = new mongoose.Schema({
     likes: {
         type: [mongoose.Types.ObjectId],
         default: []
+    },
+    comments: {
+        type: [mongoose.Types.ObjectId],
+        default: [],
+        ref: "comments"
     }
 }, {timestamps: true});
 

@@ -15,7 +15,7 @@ const makePost = async (req, res) => {
 const getPosts = async (req, res) => {
     // get posts in try catch block
     try{
-        const allPost = await postModel.find();
+        const allPost = await postModel.find().populate({path: "comments", select: "comment commentorId"});
         res.json(allPost);
     } catch (error) {
         res.json(error.message);
@@ -23,10 +23,14 @@ const getPosts = async (req, res) => {
 }
 
 const getSinglePost = async (req, res) => {
-    const {id} = req.params;
+    const {id} = req.query;
     // find post by id
-    const onePost = await postModel.findById(id);
-    res.json(onePost);
+    try {
+        const onePost = await postModel.findById(id).populate({path: "comments", select: "comment commentorId"});
+        res.json(onePost);
+    } catch (error) {
+        res.json(error.message);
+    }
 };
 
 const likePost = async (req, res) => {
