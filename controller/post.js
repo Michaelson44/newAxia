@@ -2,7 +2,13 @@ const postModel = require("../model/post");
 
 const makePost = async (req, res) => {
     // create a new instance of post model to create a post
-    const post = new postModel(req.body);
+    // const post = new postModel(req.body);
+    const {creatorId, ...others} = req.body;
+    const {id} = req.user;
+    console.log(id);
+    console.log(req.user);
+    // create new instance of post model
+    const post = new postModel({...others, creatorId: id});
     try {
         await post.save();
         res.json({message: "post has been created successfully"});
@@ -15,7 +21,8 @@ const makePost = async (req, res) => {
 const getPosts = async (req, res) => {
     // get posts in try catch block
     try{
-        const allPost = await postModel.find().populate({path: "comments", select: "comment commentorId"});
+        const allPost = await postModel.find().populate({path: "comments", select: "comment commentorId"})
+                                        .populate({path: "creatorId", select: "username gender email"});
         res.json(allPost);
     } catch (error) {
         res.json(error.message);
@@ -26,7 +33,8 @@ const getSinglePost = async (req, res) => {
     const {id} = req.query;
     // find post by id
     try {
-        const onePost = await postModel.findById(id).populate({path: "comments", select: "comment commentorId"});
+        const onePost = await postModel.findById(id).populate({path: "comments", select: "comment commentorId"})
+                                        .populate({path: "creatorId", select: "username gender email"});
         res.json(onePost);
     } catch (error) {
         res.json(error.message);

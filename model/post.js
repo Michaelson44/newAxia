@@ -11,7 +11,8 @@ const schema = new mongoose.Schema({
     },
     creatorId: {
         type: mongoose.Types.ObjectId,
-        required: true
+        required: true,
+        ref: "blogs"
     },
     likes: {
         type: [mongoose.Types.ObjectId],

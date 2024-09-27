@@ -21,6 +21,15 @@ const userSchema = new mongoose.Schema({
     },
     age: {
         type: Number
+    },
+    role: {
+        type: String,
+        required: true,
+        enum: ["superAdmin", "Admin", "Basic"]
+    },
+    credentialsAccount: {
+        type: Boolean,
+        default: true
     }
 }, {timestamps: true});
 

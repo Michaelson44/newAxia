@@ -1,8 +1,11 @@
 const express = require("express");
-const { register, login } = require("../controller/user");
+const {updateRole, updatePassword, updateUserInfo, deleteUser} = require("../controller/user");
+const { verify } = require("../middleware/verify");
 const router = express.Router();
 
-router.post('/register', register);
-router.post('/login', login);
+router.put('/change-role', verify, updateRole)
+router.put('/change-password',verify, updatePassword);
+router.put('/chage_user-info', verify, updateUserInfo);
+router.delete('/delete-user', verify, deleteUser);
 
 module.exports = router;
