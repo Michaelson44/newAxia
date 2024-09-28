@@ -73,7 +73,7 @@ const oAuthRegister = async (req, res) => {
         const savedUser = await newUser.save();
         const about = {id: savedUser.id, role: savedUser.role};
         const token = jwt.sign(about, process.env.SECRET);
-        return res.cookie("token", token)
+        res.cookie("token", token)
                     .status(200).json({message: "user logged in successfully"});
     } catch (err) {
         res.status(500).json({error: err.message});
